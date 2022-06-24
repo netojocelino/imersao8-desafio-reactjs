@@ -1,13 +1,18 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { AppBar, Grid, Toolbar, Typography } from '@material-ui/core';
 import Router from './Router';
+import Header from './components/Header';
 
 
 function App() {
   return (
     <div>
       <Grid>
-        <Router />
+        <Header />
+
+        <div style={{ marginTop: '3rem' }}>
+          <Router />
+        </div>
       </Grid>
     </div>
   );

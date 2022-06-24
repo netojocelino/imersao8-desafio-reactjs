@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar, ListItem, ListItemText } from '@material-ui/core';
 import { PostType } from '../../types/Requests/PostType';
+import Detail from '../Details';
 
 export function Post (props: PostType) {
     const to = (e: any) => {
@@ -13,6 +14,10 @@ export function Post (props: PostType) {
                 <span>FS</span>
             </Avatar>
             <ListItemText inset primary={props.title} />
+
+            <Detail bounce icon='→'>
+                Ver mais
+            </Detail>
         </ListItem>
     )
 }

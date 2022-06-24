@@ -18,3 +18,15 @@ code {
 .border-right:hover {
   border-right: 2px solid #5f5f5f !important;
 }
+
+
+.detail-bounce {
+  font-size: 14px;
+}
+
+.detail-bounce:hover,
+.detail-bounce:hover .detail-bounce-icon
+ {
+  font-size: 16px;
+  color: #5f5f5f;
+}
