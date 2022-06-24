@@ -1,5 +1,7 @@
+import { Container, Divider, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { PostType } from '../../types/Requests/PostType';
+import Comment from '../../components/Comment';
+import { CommentType, PostType } from '../../types/Requests/PostType';
 
 function Posts(props: PostType) {
     const [post, setPost] = useState({
@@ -10,6 +12,8 @@ function Posts(props: PostType) {
         body: null,
     })
 
+    const [postComments, setPostComments] = useState([])
+
     useEffect(() => {
         const url = process.env.REACT_APP_API_URL as string; 
         fetch(`${url}/posts/${props.id}`)
@@ -18,7 +22,16 @@ function Posts(props: PostType) {
             .catch(err => {
                 window.location.href = '/404';
             })
-    }, [props.id]);
+    }, [props, props.id]);
+
+    useEffect(() => {
+        const url = process.env.REACT_APP_API_URL as string; 
+        fetch(`${url}/posts/${props.id}/comments`)
+            .then(response => response.json())
+            .then(setPostComments)
+            .catch(err => {
+            })
+    }, [props, props.id]);
 
     useEffect(() => {
         if(post.userId === null) return;
@@ -35,13 +48,40 @@ function Posts(props: PostType) {
                 console.error(err)
             })
     }, [post, post.userId]);
-    return (
-        <div>
-            <h2>{ post.title }</h2>
-            <small>Posted by { post.username }</small>
 
-            <p>{ post.body }</p>
-        </div>
+
+    return (
+        <Container style={{ marginTop: '5rem' }}>
+            <div>
+                <Typography variant='h6'>
+                    { post.username }
+                </Typography>
+            </div>
+            <div>
+                <h2>{ post.title }</h2>
+
+                <p>{ post.body }</p>
+            </div>
+
+            <div>
+                <h4>Comentários</h4>
+                { postComments.length === 0 && <h1>Não existem comentários para esta postagem</h1> }
+
+                {postComments.map((postComment: CommentType, index: number) => {
+                    return (
+                        <React.Fragment>
+                            <Comment
+                                key={postComment.id}
+                                name={postComment.name}
+                                body={postComment.body}
+                                />
+                            { index < postComments.length && <Divider variant='inset' /> }
+                        </React.Fragment>
+                    )
+                }
+                        )}
+            </div>
+        </Container>
     );
 }
 
