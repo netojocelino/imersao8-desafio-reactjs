@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Grid, Toolbar, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Router from './Router';
 import Header from './components/Header';
 
